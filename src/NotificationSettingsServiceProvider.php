@@ -2,7 +2,9 @@
 
 namespace Osoobe\NotificationSettings;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use NotificationSetting;
 
 class NotificationSettingsServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,9 @@ class NotificationSettingsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        App::bind('notification-settings', function() {
+            return new NotificationSetting;
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class NotificationSettingsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }
